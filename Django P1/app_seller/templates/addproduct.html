@@ -1,0 +1,88 @@
+{% extends 'seller_header_footer.html' %}
+{% load static %}  {% block content %}
+
+<div class="page-banner-area bg-1">
+<div class="container">
+<div class="page-banner-content">
+<h1>profile</h1>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li>profile</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="register-area ptb-70">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-xl-9 col-lg-10">
+<div class="row">
+<div class="col-lg-6">
+<div class="register-left-content">
+<div class="register-image">
+<img src="{{user_data.image.url}}">
+</div>
+<div class="register-btns">
+{% comment %} <ul>
+<li>
+<a href="https://www.facebook.com/" target="_blank">Continue with Facebook</a>
+</li>
+<li>
+<a href="https://www.google.com/" target="_blank">Continue with Google</a>
+</li>
+<li>
+<a href="https://www.apple.com/" target="_blank">Continue with Apple</a>
+</li>
+</ul> {% endcomment %}
+</div>
+</div>
+</div>
+{{msg}}
+<div class="col-lg-6">
+<div class="register-content">
+    
+
+<form action="{% url 'addproduct' %}" method="POST" enctype="multipart/form-data" >
+    {% csrf_token%}
+<div class="form-group">
+<label>product name</label>
+<input type="text" name="pname" value="" class="form-control">
+</div>
+<div class="form-group">
+<label>product price </label>
+<input type="text" name="price" value="" class="form-control" >
+</div>
+<div class="form-group">
+    <label>upload image </label>
+    <input type="file" name="pic"  class="form-control">
+    </div>
+<div class="form-group">
+<label>description </label>
+<input type="textarea" name="desc"  class="form-control">
+</div>
+{% comment %} <div class="form-group">
+<label>Password *</label>
+<input type="password" name="pass"  class="form-control">
+</div>
+<div class="form-group">
+<label>confirm new Password *</label>
+<input type="password" name="cpass"  class="form-control">
+</div>
+
+<div class="form-group">
+<ul class="d-flex justify-content-between"> {% endcomment %}
+
+<button type="submit" class="default-btn style5">Add Product</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

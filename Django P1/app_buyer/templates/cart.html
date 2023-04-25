@@ -1,0 +1,129 @@
+{% extends 'header_footer.html' %} {% load static%} {% block content %}
+
+<div class="page-banner-area bg-1">
+    <div class="container">
+        <div class="page-banner-content">
+            <h1>Shopping Cart</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li>Cart</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="cart-area pt-70 pb-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-table table table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="productCheck1">
+                                        <label class="form-check-label" for="productCheck1">
+Product
+</label>
+                                    </div>
+                                </th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Subtotal</th>
+                                <th scope="col">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in total_cart %}
+                            <tr>
+                                <td class="image-and-content d-flex align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="productCheck2">
+                                    </div>
+                                    <div class="products-image">
+                                        <a href="{{i.product.image.url}}"><img src="{{i.product.image.url}}" alt="image"></a>
+                                    </div>
+                                    <div class="products-content">
+                                        <h3><a href="product-with-sidebar.html"></a></h3>
+                                        <span class="in-stock">{{i.product.pname}}</span>
+                                        
+                                    </div>
+                                </td>
+                                <td class="price">{{i.product.price}}</td>
+                                <td class="quantity">
+                                    <div class="input-counter">
+                                        <span class="minus-btn"><i class="fa-solid fa-chevron-down"></i></span>
+                                        <input type="text" min="1" value={{i.quantity}}>
+                                        <span class="plus-btn"><i class="fa-solid fa-chevron-up"></i></span>
+                                    </div>
+                                </td>
+                                <td class="total">{{i.total}} </td>
+                                <td class="remove">
+                                    <a href="#">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="cart-btn-list d-flex justify-content-between">
+                    <li>
+                        <button class="default-btn style5">Continue Shopping</button>
+                    </li>
+                    <li>
+                        <button class="default-btn style5">Update Cart</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div class="check-out-summary">
+                    <h3>Check Out Summary</h3>
+                    <ul>
+                        <li>Subtotal <span>$118.00</span></li>
+                        <li>Shipping <span>$00.00</span></li>
+                        <li>Total <span>$118.00</span></li>
+                        <li>Payble Total <span>{{final_total}}</span></li>
+                    </ul>
+                    <button id="pay-btn" class="default-btn style5">Proceed To Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    var options = {
+       
+      // Enter the Key ID generated from the Dashboard
+      key: "rzp_test_pX1Ilv0UrBwnHH",
+       
+      // Amount is in currency subunits.
+      // Default currency is INR. Hence,
+      // 50000 refers to 50000 paise
+      amount: {{final_total}}*100 ,
+      currency: "INR",
+       
+      // Your/store name.
+      name: "EVIB payment",
+       
+      // Pass the `id` obtained in the response of Step 1
+      order_id: "{{ razorpay_order_id }}",
+      callback_url: "{{ callback_url }}",
+    };
+     
+    // initialise razorpay with the options.
+    var rzp1 = new Razorpay(options);
+     
+    // add event listener to the payment button.
+    document.getElementById("pay-btn").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
+  </script>
+
+{% endblock %}

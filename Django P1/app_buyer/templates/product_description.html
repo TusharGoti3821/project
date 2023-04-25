@@ -1,0 +1,70 @@
+{% extends 'header_footer.html' %}
+{% load static%}
+{% block content %}
+
+
+<div class="page-banner-area bg-1">
+<div class="container">
+<div class="page-banner-content">
+<h1>Products Details</h1>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li>Products Details</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="products-details-area pt-70 pb-45">
+<div class="container">
+<div class="row">
+
+<div class="col-lg-12">
+<div class="shop-details-content">
+<div class="row align-items-center">
+<div class="col-lg-5">
+<div class="products-details-img">
+<img src="{{single_product.image.url}}" alt="shop image">
+</div>
+</div>
+<div class="col-lg-7">
+<div class="products-details-content">
+<div class="top-content">
+<div class="price">
+<span class="new-price">{{single_product.price}}</span>
+{% comment %} <span class="old-price">$300</span> {% endcomment %}
+</div>
+<h3>{{single_product.pname}}</h3>
+
+<p>{{single_product.desc}} </p>
+</div>
+<ul class="btns">
+<li>
+<form action="{% url 'add_to_cart' single_product.id %}" method="post">
+    {% csrf_token %}
+<input type='submit' class="default-btn style5" value='Add TO cart'></a>
+</form>
+</li>
+<li>
+<a href="compare.html" class="link-btn">
+<i class="flaticon-swap"></i>
+</a>
+<a href="wishlist.html" class="link-btn">
+<i class="flaticon-heart"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+ {% endblock %}
